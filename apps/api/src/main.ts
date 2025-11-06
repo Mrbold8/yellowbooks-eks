@@ -80,6 +80,5 @@ app.get('/yellow-books/:slug', async (req: Request<{ slug: string }>, res: Respo
 
 const port = env.API_PORT;
 app.listen(port, () => {
-  // eslint-disable-next-line no-console
   console.log(`API listening on http://localhost:${port}`);
 });

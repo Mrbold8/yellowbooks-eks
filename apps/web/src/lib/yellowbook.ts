@@ -18,9 +18,7 @@ type NextAwareRequestInit = RequestInit & {
 };
 
 const API_BASE =
-  process.env.API_BASE ??
-  process.env.NEXT_PUBLIC_API_BASE ??
-  'http://localhost:3000';
+  process.env.API_BASE ?? process.env.NEXT_PUBLIC_API_BASE ?? 'http://localhost:3000';
 
 // buildRequestInit нь өгөгдсөн сонголтоор fetch -ийн init бэлдэж, Next тохиргоог тохируулна.
 function buildRequestInit(options?: FetchConfig): NextAwareRequestInit {
