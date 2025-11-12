@@ -11,6 +11,7 @@ RUN corepack enable && corepack prepare pnpm@10 --activate
 # pnpm -д шаардлагатай файлуудыг л хуулна
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml* ./
 COPY apps/web/package.json apps/web/package.json
+# If web imports local libs, include their package.json too
 COPY libs/contract/package.json libs/contract/package.json
 # cached pnpm store ашиглаад бүх deps -ийг суулгана
 RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \

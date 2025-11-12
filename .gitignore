@@ -48,3 +48,5 @@ Thumbs.db
 .next
 out
 .env
+**/.pnpm-store/
+.pnpm-debug.log*
