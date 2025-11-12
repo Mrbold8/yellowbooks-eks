@@ -12,7 +12,7 @@
     ],
     "sharedGlobals": []
   },
-  "nxCloudId": "68e5d22ee2a3157e8e02e661",
+  "nxCloudId": "691415347aa2651e38673606",
   "plugins": [
     {
       "plugin": "@nx/next/plugin",
@@ -25,27 +25,10 @@
         "watchDepsTargetName": "watch-deps"
       }
     },
-    {
-      "plugin": "@nx/jest/plugin",
-      "options": {
-        "targetName": "test"
-      }
-    },
-    {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint"
-      }
-    }
+    { "plugin": "@nx/jest/plugin", "options": { "targetName": "test" } },
+    { "plugin": "@nx/eslint/plugin", "options": { "targetName": "lint" } }
   ],
-  "generators": {
-    "@nx/next": {
-      "application": {
-        "style": "tailwind",
-        "linter": "eslint"
-      }
-    }
-  },
+  "generators": { "@nx/next": { "application": { "style": "tailwind", "linter": "eslint" } } },
   "targetDefaults": {
     "@nx/esbuild:esbuild": {
       "cache": true,
