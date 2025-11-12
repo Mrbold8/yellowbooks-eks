@@ -1,0 +1,35 @@
+# node & package managers
+node_modules
+
+# VCS & artifacts
+.git
+.gitignore
+.gitattributes
+.log
+coverage
+
+# Next.js & builds
+.next 
+out
+dist
+
+# tooling & caches
+pnpm-store
+.cache
+
+# env files
+.env
+.env.*
+!.env.example
+
+**/node_modules
+**/.next
+**/dist
+**/coverage
+**/.turbo
+**/.cache
+**/.pnpm-store
+**/.DS_Store
+
+# Local tooling/output
+docker-compose*.yml

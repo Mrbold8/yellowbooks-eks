@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "slug": "coffee-house-sbd",
+    "name": "Coffee House SBD",
+    "description": "Specialty coffee in Sukhbaatar district.",
+    "category": "cafe",
+    "address": { "city": "Ulaanbaatar", "district": "Sukhbaatar", "street": "Seoul St 12" },
+    "location": { "lat": 47.9186, "lng": 106.917 },
+    "contacts": { "phone": "+976 99112233", "facebook": "https://facebook.com/coffeehouseub" },
+    "hours": [{ "day": "Mon", "open": "09:00", "close": "20:00" }],
+    "photos": ["https://example.com/photo1.jpg"],
+    "rating": 4.6,
+    "reviewCount": 128,
+    "priceLevel": "MODERATE",
+    "createdAt": "2024-01-02T10:00:00+08:00",
+    "updatedAt": "2024-12-12T12:00:00+08:00"
+  }
+]

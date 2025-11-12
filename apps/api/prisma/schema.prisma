@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Category {
+  restaurant
+  cafe
+  shop
+  hotel
+  service
+  bank
+  atm
+  pharmacy
+  gym
+  education
+  entertainment
+  government
+  other
+}
+
+enum PriceLevel {
+  FREE
+  CHEAP
+  MODERATE
+  EXPENSIVE
+  LUXURY
+}
+
+model YellowBook {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  name        String
+  description String?
+
+  category    Category
+
+  // Address
+  city        String     @default("Ulaanbaatar")
+  district    String
+  street      String
+  building    String?
+  postalCode  String?
+
+  // Geo (Postgres decimal with 6 precision after dot)
+  lat         Decimal    @db.Decimal(9,6)
+  lng         Decimal    @db.Decimal(9,6)
+
+  // Contact + misc as JSON
+  contacts    Json?
+  hours       Json?      // [{ day, open, close }]
+  photos      Json?      // string[]
+
+  rating      Float?
+  reviewCount Int        @default(0)
+  priceLevel  PriceLevel?
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}

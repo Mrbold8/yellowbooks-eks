@@ -1,0 +1,12 @@
+packages:
+  - apps/*
+  - libs/*
+
+autoInstallPeers: true
+
+onlyBuiltDependencies:
+  - '@prisma/client'
+  - '@prisma/engines'
+  - prisma
+
+strictPeerDependencies: false
