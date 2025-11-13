@@ -1,3 +1,5 @@
+[![ci-build-push](https://github.com/Mrbold8/yellowbooks-eks/actions/workflows/ci-build-push.yml/badge.svg)](https://github.com/Mrbold8/yellowbooks-eks/actions/workflows/ci-build-push.yml)
+
 # YellowBook (Nx Monorepo)
 
 Улаанбаатарын бизнесийн лавлах — **Next.js (App Router)** frontend + **Express API** + **shared Zod contract**, **Nx** болон **pnpm** -р удирдана.
