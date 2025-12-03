@@ -21,6 +21,10 @@ RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
 FROM deps AS build
 # workspace -ийн бүх файлуудыг хуулна
 COPY . .
+# Ensure Prisma Client is generated even when pnpm skips lifecycle scripts
+ARG DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
+ENV DATABASE_URL=$DATABASE_URL
+RUN pnpm exec prisma generate --schema=apps/api/prisma/schema.prisma
 # public API URL -г client болон server талд ашиглахын тулд орчны хувьсагч болгон оруулна
 ARG NEXT_PUBLIC_API_BASE=http://localhost:3000
 ARG API_BASE=http://localhost:3000

@@ -1,3 +1,5 @@
+import { randomUUID } from 'node:crypto';
+
 import type { DefaultSession } from 'next-auth';
 import type { NextAuthOptions } from 'next-auth';
 import type { JWT } from 'next-auth/jwt';
@@ -5,11 +7,12 @@ import GitHubProvider from 'next-auth/providers/github';
 
 import { prisma } from './prisma';
 
-const nextAuthSecret = process.env.NEXTAUTH_SECRET;
-
-if (!nextAuthSecret) {
-  throw new Error('NEXTAUTH_SECRET is not set');
-}
+const nextAuthSecret =
+  process.env.NEXTAUTH_SECRET ??
+  (() => {
+    console.warn('NEXTAUTH_SECRET is not set. Using a random secret for this build.');
+    return randomUUID();
+  })();
 
 type SessionUser = DefaultSession['user'] & {
   id: string;
