@@ -3,7 +3,7 @@ import type { DefaultSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 
-import { authOptions } from '../../api/auth/[...nextauth]/route';
+import { authOptions } from '../../../lib/auth-options';
 
 type AdminSessionUser = DefaultSession['user'] & {
   id?: string;
