@@ -19,8 +19,6 @@ const toEntry = (r: Row): YellowBookEntry => ({
   name: r.name,
   description: r.description ?? undefined,
 
-  // Prisma returns string enums; cast them to the contract's union type.
-  // (Make sure your Zod schema uses the same string values!)
   category: r.category as unknown as YellowBookEntry['category'],
 
   address: {
@@ -67,7 +65,7 @@ app.get('/yellow-books/:slug', async (req: Request<{ slug: string }>, res: Respo
     if (!row) return res.status(404).json({ error: 'Not found' });
 
     const entry = toEntry(row);
-    // Optional: validate single item with Zod:
+    // validate single item with Zod:
     // YellowBookEntrySchema.parse(entry);
 
     res.setHeader('Cache-Control', 'no-store');

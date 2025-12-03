@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 import { fetchYellowBooks } from '../../lib/yellowbook';
 import { YELLOW_BOOKS_TAG } from '../../lib/cache-tags';
 
-// list-ийг 60 секунд тутамд ISR -ээр шинэчлэх
+// list -ийг 60 секунд тутамд ISR -р шинэчлэх
 export const revalidate = 60;
 
 const fallbackPhoto = 'https://placehold.co/96x96?text=No+Photo';
@@ -64,11 +64,11 @@ async function YellowBookList() {
   } catch (error) {
     console.warn('yellow-books list fallback:', error);
 
-    return (
-      <div className="rounded-2xl border border-dashed p-6 text-sm text-gray-500">
-        Yellow book сервис одоогоор холбогдохгүй байна. Дараа дахин оролдоно уу.
-      </div>
-    );
+    // return (
+    //   <div className="rounded-2xl border border-dashed p-6 text-sm text-gray-500">
+    //     Yellowbook service холбогдохгүй байна. Дараа дахин оролдоно уу.
+    //   </div>
+    // );
   }
 }
 
