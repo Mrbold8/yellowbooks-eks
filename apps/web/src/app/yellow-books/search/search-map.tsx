@@ -31,7 +31,7 @@ function SearchMapComponent({ items }: Props) {
         ))}
         {items.length === 0 && (
           <div className="flex items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-50 text-xs text-neutral-500">
-            Илэрцгүй байна.
+            Илэрц байхгүй байна.
           </div>
         )}
       </div>

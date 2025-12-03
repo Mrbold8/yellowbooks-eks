@@ -19,8 +19,8 @@ export default async function YellowBookDetail({ params }: YellowBookPageProps) 
       tags: [YELLOW_BOOKS_TAG],
     });
 
-    // const center = `${item.location.lat},${item.location.lng}`;
-    // const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${item.location.lng - 0.01}%2C${item.location.lat - 0.01}%2C${item.location.lng + 0.01}%2C${item.location.lat + 0.01}&layer=mapnik&marker=${center}`;
+    const center = `${item.location.lat},${item.location.lng}`;
+    const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${item.location.lng - 0.01}%2C${item.location.lat - 0.01}%2C${item.location.lng + 0.01}%2C${item.location.lat + 0.01}&layer=mapnik&marker=${center}`;
 
     return (
       <main className="max-w-3xl mx-auto p-6">
@@ -75,7 +75,7 @@ export default async function YellowBookDetail({ params }: YellowBookPageProps) 
         </section>
 
         {/* Map */}
-        {/* <section aria-labelledby="map" className="mt-6">
+        <section aria-labelledby="map" className="mt-6">
           <h2 id="map" className="font-semibold">
             Байршил (Map)
           </h2>
@@ -88,7 +88,7 @@ export default async function YellowBookDetail({ params }: YellowBookPageProps) 
               aria-label="Business location on map"
             />
           </div>
-        </section> */}
+        </section>
 
         {/* Photos */}
         {item.photos && item.photos.length > 0 && (

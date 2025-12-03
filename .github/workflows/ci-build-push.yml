@@ -2,7 +2,7 @@ name: ci-build-push
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
 
 permissions:
@@ -11,7 +11,7 @@ permissions:
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
-  ECR_REPO: ${{ vars.ECR_REPO }}         
+  ECR_REPO: ${{ vars.ECR_REPO }}
   NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
 
 jobs:

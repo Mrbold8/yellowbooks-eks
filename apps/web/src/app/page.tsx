@@ -3,6 +3,8 @@ import Link from 'next/link';
 
 import { fetchYellowBooks } from '../lib/yellowbook';
 
+import { AuthButton } from './AuthButton';
+
 const categories = [
   'Ресторан',
   'Кафе',
@@ -77,6 +79,7 @@ export default async function HomePage() {
           <Link href="/" className="text-lg font-semibold tracking-[0.24em] uppercase">
             ШАР НОМ
           </Link>
+          <AuthButton />
           <nav className="flex gap-8 text-sm">
             <Link href="/login" className="transition hover:text-neutral-600">
               Нэвтрэх
