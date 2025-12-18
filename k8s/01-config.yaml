@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: yellowbooks-config
+  namespace: yellowbooks
+data:
+  NEXT_PUBLIC_API: '/api'

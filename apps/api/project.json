@@ -75,11 +75,13 @@
       "dependsOn": ["build"],
       "options": {
         "buildTarget": "api:build",
-        "runBuildTargetDependencies": false
+        "runBuildTargetDependencies": false,
+        "runtimeArgs": []
       },
       "configurations": {
         "development": {
-          "buildTarget": "api:build:development"
+          "buildTarget": "api:build:development",
+          "runtimeArgs": ["-r", "dotenv/config"]
         },
         "production": {
           "buildTarget": "api:build:production"

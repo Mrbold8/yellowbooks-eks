@@ -4,7 +4,7 @@ kind: ClusterConfig
 metadata:
   name: yellowbooks-eks
   region: ap-southeast-1
-  version: "${K8S_VERSION}"
+  version: '${K8S_VERSION}'
 
 iam:
   withOIDC: true
