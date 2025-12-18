@@ -2,9 +2,9 @@
 import { Prisma } from '@prisma/client';
 
 import { AIClientError, embedQuestion, generateAnswer } from '../../ai-client';
-import { prisma } from '../../../db';
+import { getPrismaClient } from '../../../db';
 
-type YellowBookRow = Awaited<ReturnType<typeof prisma.yellowBook.findMany>>[number];
+type YellowBookRow = Prisma.YellowBookGetPayload<object>;
 
 export type YellowBookBusiness = {
   id: string;
@@ -211,6 +211,7 @@ function buildFallbackAnswer(question: string, businesses: YellowBookBusiness[])
   4) text gen model ашиглаад хариу үүсгэнэ.
 */
 export async function searchYellowBooks(question: string, city?: string): Promise<SearchResult> {
+  const prisma = getPrismaClient();
   let questionEmbedding: number[] | null = null;
   try {
     questionEmbedding = await embedQuestion(question);

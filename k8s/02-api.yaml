@@ -15,17 +15,14 @@ spec:
     spec:
       containers:
         - name: api
-          image: 336098584974.dkr.ecr.ap-southeast-1.amazonaws.com/yellowbooks/api:ef1301b
+          image: 336098584974.dkr.ecr.ap-southeast-1.amazonaws.com/yellowbooks/api:main
           ports:
             - containerPort: 3000
           env:
             - name: PORT
               value: '3000'
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: yellowbooks-secrets
-                  key: DATABASE_URL
+            - name: DB_MODE
+              value: mock
           readinessProbe:
             httpGet:
               path: /health

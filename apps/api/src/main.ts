@@ -1,11 +1,10 @@
 import express, { type Request, type Response } from 'express';
 import cors from 'cors';
 import { env } from '@yellowbook/config';
-import { YellowBookList, YellowBookEntry, assertYellowBookList } from '@yellowbook/contract';
-import type { Prisma } from '@prisma/client';
+import { assertYellowBookList } from '@yellowbook/contract';
 
 import { yellowBooksAiRouter } from './routes/yellowbooks-ai.routes';
-import { prisma } from './db';
+import { createYellowBooksStore } from './yellowbooks/store';
 
 const app = express();
 app.use(cors({ origin: true }));
@@ -16,72 +15,11 @@ app.use('/api/ai', yellowBooksAiRouter);
 
 app.get('/health', (_req: Request, res: Response) => res.json({ ok: true }));
 
-// Select explicitly to stay compatible with older DB schemas that may not have newer columns (e.g. `embedding`).
-const yellowBookSelect = {
-  id: true,
-  slug: true,
-  name: true,
-  description: true,
-  category: true,
-  city: true,
-  district: true,
-  street: true,
-  building: true,
-  postalCode: true,
-  lat: true,
-  lng: true,
-  contacts: true,
-  hours: true,
-  photos: true,
-  rating: true,
-  reviewCount: true,
-  priceLevel: true,
-  createdAt: true,
-  updatedAt: true,
-} satisfies Prisma.YellowBookSelect;
-
-// Helper: Prisma row -> Contract entry (strong types, no 'any')
-type Row = Prisma.YellowBookGetPayload<{ select: typeof yellowBookSelect }>;
-const toEntry = (r: Row): YellowBookEntry => ({
-  id: r.id,
-  slug: r.slug,
-  name: r.name,
-  description: r.description ?? undefined,
-
-  category: r.category as unknown as YellowBookEntry['category'],
-
-  address: {
-    city: r.city,
-    district: r.district,
-    street: r.street,
-    building: r.building ?? undefined,
-    postalCode: r.postalCode ?? undefined,
-  },
-  location: { lat: Number(r.lat), lng: Number(r.lng) },
-
-  // JSON columns: cast to the contract shapes; Zod will validate at runtime.
-  contacts: (r.contacts as unknown as YellowBookEntry['contacts']) ?? undefined,
-  hours: (r.hours as unknown as YellowBookEntry['hours']) ?? undefined,
-  photos: (r.photos as unknown as YellowBookEntry['photos']) ?? undefined,
-
-  rating: r.rating ?? undefined,
-  reviewCount: r.reviewCount,
-  priceLevel: (r.priceLevel as unknown as YellowBookEntry['priceLevel']) ?? undefined,
-
-  createdAt: r.createdAt.toISOString(),
-  updatedAt: r.updatedAt.toISOString(),
-});
+const store = createYellowBooksStore();
 
 app.get('/yellow-books', async (_req: Request, res: Response) => {
   try {
-    const rows = await prisma.yellowBook.findMany({
-      orderBy: { createdAt: 'desc' },
-      select: yellowBookSelect,
-    });
-
-    const list: YellowBookList = rows.map(toEntry);
-
-    // Validate with Zod (shared contract)
+    const list = await store.list();
     const safe = assertYellowBookList(list);
     res.setHeader('Cache-Control', 'no-store');
     res.json(safe);
@@ -93,15 +31,8 @@ app.get('/yellow-books', async (_req: Request, res: Response) => {
 
 app.get('/yellow-books/:slug', async (req: Request<{ slug: string }>, res: Response) => {
   try {
-    const row = await prisma.yellowBook.findUnique({
-      where: { slug: req.params.slug },
-      select: yellowBookSelect,
-    });
-    if (!row) return res.status(404).json({ error: 'Not found' });
-
-    const entry = toEntry(row);
-    // validate single item with Zod:
-    // YellowBookEntrySchema.parse(entry);
+    const entry = await store.getBySlug(req.params.slug);
+    if (!entry) return res.status(404).json({ error: 'Not found' });
 
     res.setHeader('Cache-Control', 'no-store');
     res.json(entry);
@@ -111,7 +42,7 @@ app.get('/yellow-books/:slug', async (req: Request<{ slug: string }>, res: Respo
   }
 });
 
-const port = env.API_PORT;
+const port = env.PORT;
 app.listen(port, () => {
   console.log(`API listening on http://localhost:${port}`);
 });
