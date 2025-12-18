@@ -49,9 +49,7 @@ export default function YellowBooksAssistantPage() {
 
       if (!res.ok) {
         const body = await res.json().catch(() => null);
-        const message =
-          body?.error ||
-          `Серверээс алдаа ирлээ. Статус код: ${res.status}`;
+        const message = body?.error || `Серверээс алдаа ирлээ. Статус код: ${res.status}`;
         throw new Error(message);
       }
 
@@ -73,17 +71,13 @@ export default function YellowBooksAssistantPage() {
     <main className="mx-auto max-w-4xl px-4 py-10 space-y-8">
       {/* Header */}
       <section className="space-y-2">
-        <h1 className="text-3xl font-semibold">
-          YellowBooks – AI туслах
-        </h1>
+        <h1 className="text-3xl font-semibold">YellowBooks – AI туслах</h1>
         <p className="text-sm text-gray-600">
-          Байршил, төрөл, онцлог зэрэг мэдээллээ Монгол хэлээр энгийн
-          өгүүлбэрээр асууж, AI -аас тохирох бизнесүүдийн санал
-          аваарай.
+          Байршил, төрөл, онцлог зэрэг мэдээллээ Монгол хэлээр энгийн өгүүлбэрээр асууж, AI -аас
+          тохирох бизнесүүдийн санал аваарай.
         </p>
         <p className="text-xs text-gray-500">
-          Жишээ: &ldquo;Сүхбаатар дүүрэгт орой хүртэл
-          ажилладаг кофе шоп олж өгөөч&rdquo;
+          Жишээ: &ldquo;Сүхбаатар дүүрэгт орой хүртэл ажилладаг кофе шоп олж өгөөч&rdquo;
         </p>
       </section>
 
@@ -94,10 +88,7 @@ export default function YellowBooksAssistantPage() {
           className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
         >
           <div className="space-y-2">
-            <label
-              htmlFor="question"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="question" className="block text-sm font-medium text-gray-700">
               Асуулт (Монгол хэлээр)
             </label>
             <textarea
@@ -111,10 +102,7 @@ export default function YellowBooksAssistantPage() {
           </div>
 
           <div className="space-y-2">
-            <label
-              htmlFor="city"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="city" className="block text-sm font-medium text-gray-700">
               Хот (заавал биш)
             </label>
             <input
@@ -135,10 +123,7 @@ export default function YellowBooksAssistantPage() {
               {loading ? 'AI хайж байна…' : 'AI-аас асуух'}
             </button>
 
-            <Link
-              href="/yellow-books"
-              className="text-xs text-gray-600 underline hover:text-black"
-            >
+            <Link href="/yellow-books" className="text-xs text-gray-600 underline hover:text-black">
               Энгийн жагсаалтаар харах
             </Link>
           </div>
@@ -174,14 +159,10 @@ export default function YellowBooksAssistantPage() {
 
           {/* Businesses list */}
           <div className="space-y-3">
-            <h3 className="text-sm font-semibold text-gray-700">
-              Олдсон бизнесүүд
-            </h3>
+            <h3 className="text-sm font-semibold text-gray-700">Олдсон бизнесүүд</h3>
 
             {result.businesses.length === 0 && (
-              <p className="text-sm text-gray-600">
-                Тохирох бизнес олдсонгүй.
-              </p>
+              <p className="text-sm text-gray-600">Тохирох бизнес олдсонгүй.</p>
             )}
 
             {result.businesses.length > 0 && (
@@ -200,27 +181,18 @@ export default function YellowBooksAssistantPage() {
                       </Link>
                       {(b.city || b.district) && (
                         <span className="text-xs text-gray-500">
-                          {[b.city, b.district]
-                            .filter(Boolean)
-                            .join(', ')}
+                          {[b.city, b.district].filter(Boolean).join(', ')}
                         </span>
                       )}
                     </div>
 
                     {b.categories && b.categories.length > 0 && (
                       <p className="mt-1 text-xs text-gray-500">
-                        Ангилал:{' '}
-                        {b.categories
-                          .filter(Boolean)
-                          .join(', ')}
+                        Ангилал: {b.categories.filter(Boolean).join(', ')}
                       </p>
                     )}
 
-                    {b.description && (
-                      <p className="mt-2 text-sm text-gray-700">
-                        {b.description}
-                      </p>
-                    )}
+                    {b.description && <p className="mt-2 text-sm text-gray-700">{b.description}</p>}
                   </li>
                 ))}
               </ul>

@@ -8,12 +8,10 @@ const apiKey =
   process.env.HF_API_KEY;
 
 if (!apiKey) {
-  throw new Error(
-    'Set huggingface creds!',
-  );
+  throw new Error('Set huggingface creds!');
 }
 
-// Бүх хүсэлтэд дахин ашиглах client 
+// Бүх хүсэлтэд дахин ашиглах client
 const hf = new InferenceClient(apiKey);
 
 // Multilingual embedding model (Mongolian + English)
@@ -34,7 +32,7 @@ function toVector(output: unknown): number[] {
     return output as number[];
   }
 
-  // Case 2: number[][] хэрэв эхний element нь массив байвал 
+  // Case 2: number[][] хэрэв эхний element нь массив байвал
   if (Array.isArray(output[0])) {
     return (output[0] as number[]).map((v) => Number(v));
   }

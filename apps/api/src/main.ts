@@ -6,7 +6,6 @@ import { YellowBookList, YellowBookEntry, assertYellowBookList } from '@yellowbo
 import type { Prisma } from '@prisma/client';
 
 import { yellowBooksAiRouter } from './routes/yellowbooks-ai.routes';
-
 import { prisma } from './db';
 
 const app = express();

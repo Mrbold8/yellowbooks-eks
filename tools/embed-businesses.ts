@@ -5,7 +5,7 @@ import { getEmbedding } from './embed-client';
 
 const prisma = new PrismaClient();
 
-// Batch бүрт process хийх мөр 
+// Batch бүрт process хийх мөр
 const BATCH_SIZE = 20;
 
 // Embedding хийх input -ээ бэлдэнэ
@@ -91,7 +91,6 @@ async function main() {
 
   console.log('Embedding хийж дууссан.');
 }
-
 
 main()
   .catch((err) => {

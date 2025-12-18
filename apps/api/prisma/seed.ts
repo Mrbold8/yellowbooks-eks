@@ -129,7 +129,8 @@ async function main() {
     {
       slug: 'roc-mongolia',
       name: 'Roc Mongolia',
-      description: 'The recently renovated ROC Drink Bar branch adds a new color to the coffee bars of Mongolia and serves special drinks tailored for both day and night.',
+      description:
+        'The recently renovated ROC Drink Bar branch adds a new color to the coffee bars of Mongolia and serves special drinks tailored for both day and night.',
       category: Category.cafe,
       city: 'Улаанбаатар',
       district: 'Сүхбаатар',
@@ -163,9 +164,7 @@ async function main() {
         instagram: 'https://instagram.com',
       },
       hours: [{ day: 'Fri', open: '09:00', close: '21:00' }],
-      photos: [
-        'https://texascoffeeschool.com/wp-content/uploads/2021/10/DSC_0052-scaled.jpg',
-      ],
+      photos: ['https://texascoffeeschool.com/wp-content/uploads/2021/10/DSC_0052-scaled.jpg'],
       rating: 4.6,
       reviewCount: 132,
       priceLevel: PriceLevel.MODERATE,
