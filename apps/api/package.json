@@ -18,5 +18,8 @@
         "inspect": true
       }
     }
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.3"
   }
 }
