@@ -43,6 +43,16 @@ const ArrowIcon = () => (
   </svg>
 );
 
+function Navbar() {
+  return (
+    <nav className="flex items-center gap-4 text-sm">
+      <Link href="/yellow-books/assistant" className="hover:underline">
+        AI туслах
+      </Link>
+    </nav>
+  );
+}
+
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
@@ -75,19 +85,24 @@ export default async function HomePage() {
   return (
     <main className="min-h-screen bg-[#f9f9f9] text-neutral-900">
       <div className="mx-auto flex max-w-6xl flex-col px-6 pb-24">
-        <header className="flex items-center justify-between border-b border-neutral-200 py-6">
-          <Link href="/" className="text-lg font-semibold tracking-[0.24em] uppercase">
-            ШАР НОМ
-          </Link>
+        <header className="flex flex-wrap items-center justify-between gap-4 border-b border-neutral-200 py-6">
+          <div className="flex flex-wrap items-center gap-6">
+            <Link href="/" className="text-lg font-semibold tracking-[0.24em] uppercase">
+              ШАР НОМ
+            </Link>
+            <Navbar />
+          </div>
           <AuthButton />
-          <nav className="flex gap-8 text-sm">
-            <Link href="/login" className="transition hover:text-neutral-600">
-              Нэвтрэх
-            </Link>
-            <Link href="/register" className="transition hover:text-neutral-600">
-              Бүртгүүлэх
-            </Link>
-          </nav>
+          <div className="flex flex-wrap items-center gap-4">
+            <nav className="flex gap-4 text-sm">
+              <Link href="/login" className="transition hover:text-neutral-600">
+                Нэвтрэх
+              </Link>
+              <Link href="/register" className="transition hover:text-neutral-600">
+                Бүртгүүлэх
+              </Link>
+            </nav>
+          </div>
         </header>
 
         <section className="flex flex-col items-center gap-8 py-16 text-center">

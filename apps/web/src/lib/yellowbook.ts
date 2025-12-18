@@ -47,7 +47,17 @@ function buildRequestInit(options?: FetchConfig): NextAwareRequestInit {
 
 export async function fetchYellowBooks(options?: FetchConfig): Promise<YellowBookList> {
   const res = await fetch(`${API_BASE}/yellow-books`, buildRequestInit(options));
-  if (!res.ok) throw new Error(`Failed to fetch list: ${res.status}`);
+  if (!res.ok) {
+    let detail: string | undefined;
+    try {
+      detail = await res.text();
+    } catch {
+      // ignore
+    }
+    throw new Error(
+      `Failed to fetch list: ${res.status}${detail ? ` - ${detail.slice(0, 500)}` : ''}`,
+    );
+  }
   return (await res.json()) as YellowBookList;
 }
 
@@ -57,6 +67,16 @@ export async function fetchYellowBook(
 ): Promise<YellowBookEntry> {
   const res = await fetch(`${API_BASE}/yellow-books/${slug}`, buildRequestInit(options));
   if (res.status === 404) throw new Error('Not found');
-  if (!res.ok) throw new Error(`Failed to fetch item: ${res.status}`);
+  if (!res.ok) {
+    let detail: string | undefined;
+    try {
+      detail = await res.text();
+    } catch {
+      // ignore
+    }
+    throw new Error(
+      `Failed to fetch item: ${res.status}${detail ? ` - ${detail.slice(0, 500)}` : ''}`,
+    );
+  }
   return (await res.json()) as YellowBookEntry;
 }
