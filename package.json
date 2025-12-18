@@ -16,16 +16,19 @@
     "typecheck": "tsc -p tsconfig.base.json --noEmit",
     "build": "nx run-many -t build",
     "dev:web": "nx serve web",
-    "dev:api": "nx serve api"
+    "dev:api": "nx serve api",
+    "embed:businesses": "tsx tools/embed-businesses.ts"
   },
   "private": true,
   "dependencies": {
+    "@huggingface/inference": "^4.13.4",
     "@prisma/client": "^6.17.0",
     "cors": "^2.8.5",
     "empty": "0.10.1",
     "express": "^4.21.2",
     "next": "^15.5.4",
     "next-auth": "^4.24.13",
+    "openai": "^6.9.1",
     "prisma": "^6.17.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

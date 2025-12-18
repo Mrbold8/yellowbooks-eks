@@ -1,7 +1,11 @@
+import 'dotenv/config';
 import express, { type Request, type Response } from 'express';
 import cors from 'cors';
 import { env } from '@yellowbook/config';
 import { YellowBookList, YellowBookEntry, assertYellowBookList } from '@yellowbook/contract';
+import type { Prisma } from '@prisma/client';
+
+import { yellowBooksAiRouter } from './routes/yellowbooks-ai.routes';
 
 import { prisma } from './db';
 
@@ -9,10 +13,37 @@ const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
 
+// After app.use(express.json()), add:
+app.use('/api/ai', yellowBooksAiRouter);
+
 app.get('/health', (_req: Request, res: Response) => res.json({ ok: true }));
 
+// Select explicitly to stay compatible with older DB schemas that may not have newer columns (e.g. `embedding`).
+const yellowBookSelect = {
+  id: true,
+  slug: true,
+  name: true,
+  description: true,
+  category: true,
+  city: true,
+  district: true,
+  street: true,
+  building: true,
+  postalCode: true,
+  lat: true,
+  lng: true,
+  contacts: true,
+  hours: true,
+  photos: true,
+  rating: true,
+  reviewCount: true,
+  priceLevel: true,
+  createdAt: true,
+  updatedAt: true,
+} satisfies Prisma.YellowBookSelect;
+
 // Helper: Prisma row -> Contract entry (strong types, no 'any')
-type Row = Awaited<ReturnType<typeof prisma.yellowBook.findMany>>[number];
+type Row = Prisma.YellowBookGetPayload<{ select: typeof yellowBookSelect }>;
 const toEntry = (r: Row): YellowBookEntry => ({
   id: r.id,
   slug: r.slug,
@@ -45,7 +76,10 @@ const toEntry = (r: Row): YellowBookEntry => ({
 
 app.get('/yellow-books', async (_req: Request, res: Response) => {
   try {
-    const rows = await prisma.yellowBook.findMany({ orderBy: { createdAt: 'desc' } });
+    const rows = await prisma.yellowBook.findMany({
+      orderBy: { createdAt: 'desc' },
+      select: yellowBookSelect,
+    });
 
     const list: YellowBookList = rows.map(toEntry);
 
@@ -61,7 +95,10 @@ app.get('/yellow-books', async (_req: Request, res: Response) => {
 
 app.get('/yellow-books/:slug', async (req: Request<{ slug: string }>, res: Response) => {
   try {
-    const row = await prisma.yellowBook.findUnique({ where: { slug: req.params.slug } });
+    const row = await prisma.yellowBook.findUnique({
+      where: { slug: req.params.slug },
+      select: yellowBookSelect,
+    });
     if (!row) return res.status(404).json({ error: 'Not found' });
 
     const entry = toEntry(row);

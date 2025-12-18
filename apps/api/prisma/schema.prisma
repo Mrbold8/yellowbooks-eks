@@ -61,6 +61,8 @@ model YellowBook {
 
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+
+  embedding   Json?   // vector embedding
 }
 
 model User {
