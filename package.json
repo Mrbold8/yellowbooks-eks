@@ -16,7 +16,7 @@
     "typecheck": "tsc -p tsconfig.base.json --noEmit",
     "build": "nx run-many -t build",
     "dev:web": "nx serve web",
-    "dev:api": "nx serve api",
+    "dev:api": "NX_DAEMON=false nx serve api",
     "embed:businesses": "tsx tools/embed-businesses.ts"
   },
   "private": true,

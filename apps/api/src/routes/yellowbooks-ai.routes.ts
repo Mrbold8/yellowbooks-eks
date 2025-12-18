@@ -1,7 +1,6 @@
 // apps/api/src/routes/yellowbooks-ai.routes.ts
 import { Router, Request, Response } from 'express';
-
-import { searchYellowBooks } from '../ai/yellow-books/search/service';
+import { env } from '@yellowbook/config';
 
 export const yellowBooksAiRouter = Router();
 
@@ -27,6 +26,12 @@ function getHfErrorInfo(err: unknown): { status?: number; message?: string } {
  */
 yellowBooksAiRouter.post('/yellow-books/search', async (req: Request, res: Response) => {
   try {
+    if (env.DB_MODE !== 'postgres') {
+      return res.status(503).json({
+        error: 'AI search is disabled in mock mode.',
+      });
+    }
+
     const { question, city } = req.body ?? {};
 
     if (!question || typeof question !== 'string') {
@@ -35,6 +40,7 @@ yellowBooksAiRouter.post('/yellow-books/search', async (req: Request, res: Respo
       });
     }
 
+    const { searchYellowBooks } = await import('../ai/yellow-books/search/service');
     const result = await searchYellowBooks(question, city);
 
     return res.json({
