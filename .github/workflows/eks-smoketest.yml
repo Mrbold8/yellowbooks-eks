@@ -1,0 +1,32 @@
+name: EKS Smoke Test (OIDC)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read  
+
+jobs:
+  smoketest:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: ap-southeast-1
+      EKS_CLUSTER: yellowbooks-eks
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::336098584974:role/yellowbooks-github-actions-role
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --name "$EKS_CLUSTER" --region "$AWS_REGION"
+
+      - name: Kubernetes access check
+        run: kubectl get ns
