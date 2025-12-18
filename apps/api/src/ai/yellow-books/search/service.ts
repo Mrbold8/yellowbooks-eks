@@ -186,7 +186,7 @@ function selectFallbackBusinesses(rows: YellowBookRow[], question: string): Yell
 
 function buildFallbackAnswer(question: string, businesses: YellowBookBusiness[]): string {
   if (businesses.length === 0) {
-    return `Уучлаарай, \"${question}\" асуултад тохирох бизнес олдсонгүй. Дахин тодруулж асуугаарай эсвэл өөр төрөл хайж үзээрэй.`;
+    return `Уучлаарай, "${question}" асуултад тохирох бизнес олдсонгүй. Дахин тодруулж асуугаарай эсвэл өөр төрөл хайж үзээрэй.`;
   }
 
   const bulletList = businesses
@@ -197,7 +197,7 @@ function buildFallbackAnswer(question: string, businesses: YellowBookBusiness[])
     .join('\n');
 
   return [
-    `Таны \"${question}\" асуултад дараах газрууд тохирч байна:`,
+    `Таны "${question}" асуултад дараах газрууд тохирч байна:`,
     bulletList,
     'Дэлгэрэнгүй мэдээллийг YellowBook -ийн дэлгэрэнгүй хуудсаас шалгаарай.',
   ].join('\n');
@@ -210,10 +210,7 @@ function buildFallbackAnswer(question: string, businesses: YellowBookBusiness[])
   3) Cosine similarity -г тооцоолоод, top matches -ийг сонгож авна.
   4) text gen model ашиглаад хариу үүсгэнэ.
 */
-export async function searchYellowBooks(
-  question: string,
-  city?: string,
-): Promise<SearchResult> {
+export async function searchYellowBooks(question: string, city?: string): Promise<SearchResult> {
   let questionEmbedding: number[] | null = null;
   try {
     questionEmbedding = await embedQuestion(question);

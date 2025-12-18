@@ -37,12 +37,11 @@ const hfGeneration =
     ? new InferenceClient(apiKey, { endpointUrl: generationEndpointUrl })
     : hfRouter;
 
-// Embedding model 
+// Embedding model
 const EMBEDDING_MODEL_ID = 'intfloat/multilingual-e5-small';
 
 // Text generation model
 const GENERATION_MODEL_ID = 'mistralai/Mistral-7B-Instruct-v0.2';
-
 
 // Output -ийг normalize хийх шаардлагатай
 // HF featureExtraction output -> number[]
@@ -88,7 +87,9 @@ export async function embedQuestion(question: string): Promise<number[]> {
 
     return toVector(output as unknown);
   } catch (err) {
-    throw new AIClientError('Асуултыг embed хийхэд алдаа гарлаа.', 'inference-error', { cause: err });
+    throw new AIClientError('Асуултыг embed хийхэд алдаа гарлаа.', 'inference-error', {
+      cause: err,
+    });
   }
 }
 
@@ -112,6 +113,8 @@ export async function generateAnswer(prompt: string): Promise<string> {
     const text = (result as any).generated_text ?? '';
     return text.trim();
   } catch (err) {
-    throw new AIClientError('Хариу generate хийхэд алдаа гарлаа', 'inference-error', { cause: err });
+    throw new AIClientError('Хариу generate хийхэд алдаа гарлаа', 'inference-error', {
+      cause: err,
+    });
   }
 }
