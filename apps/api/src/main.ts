@@ -1,4 +1,4 @@
-import express, { type Request, type Response } from 'express';
+import express, { type Request, type Response, Router } from 'express';
 import cors from 'cors';
 import { env } from '@yellowbook/config';
 import { assertYellowBookList } from '@yellowbook/contract';
@@ -10,14 +10,14 @@ const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
 
-// After app.use(express.json()), add:
-app.use('/api/ai', yellowBooksAiRouter);
+app.use(['/ai', '/api/ai'], yellowBooksAiRouter);
 
-app.get('/health', (_req: Request, res: Response) => res.json({ ok: true }));
+app.get(['/health', '/api/health'], (_req: Request, res: Response) => res.json({ ok: true }));
 
 const store = createYellowBooksStore();
+const apiRouter = Router();
 
-app.get('/yellow-books', async (_req: Request, res: Response) => {
+apiRouter.get('/yellow-books', async (_req: Request, res: Response) => {
   try {
     const list = await store.list();
     const safe = assertYellowBookList(list);
@@ -29,7 +29,7 @@ app.get('/yellow-books', async (_req: Request, res: Response) => {
   }
 });
 
-app.get('/yellow-books/:slug', async (req: Request<{ slug: string }>, res: Response) => {
+apiRouter.get('/yellow-books/:slug', async (req: Request<{ slug: string }>, res: Response) => {
   try {
     const entry = await store.getBySlug(req.params.slug);
     if (!entry) return res.status(404).json({ error: 'Not found' });
@@ -41,6 +41,9 @@ app.get('/yellow-books/:slug', async (req: Request<{ slug: string }>, res: Respo
     res.status(500).json({ error: msg });
   }
 });
+
+app.use('/', apiRouter);
+app.use('/api', apiRouter);
 
 const port = env.PORT;
 app.listen(port, () => {
