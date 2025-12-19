@@ -34,6 +34,10 @@ RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
     pnpm --filter ./apps/api deploy --prod --legacy /app/out
 # Nx -ийн dist output -аас зөвхөн apps/api -г хуулна
 RUN mkdir -p /app/out/dist/apps && cp -R /app/dist/apps/api /app/out/dist/apps/api
+# Mock mode-д ашиглах yellow-books.json файлыг deploy tree-д хуулна
+RUN mkdir -p /app/out/apps/api/data /app/out/dist/apps/api/data \
+    && cp /app/apps/api/data/yellow-books.json /app/out/apps/api/data/ \
+    && cp /app/apps/api/data/yellow-books.json /app/out/dist/apps/api/data/
 # Deploy tree дотор Prisma client -ийг дахин generate хийнэ
 RUN cd /app/out && pnpm prisma generate --schema=prisma/schema.prisma || true
 

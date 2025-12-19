@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: 336098584974.dkr.ecr.ap-southeast-1.amazonaws.com/yellowbooks/web:main
+          image: 336098584974.dkr.ecr.ap-southeast-1.amazonaws.com/yellowbooks/web:15a0102
           ports:
             - containerPort: 3000
           env:
