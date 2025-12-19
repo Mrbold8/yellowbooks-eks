@@ -6,7 +6,11 @@ import { fetchYellowBooks } from '../../lib/yellowbook';
 import { YELLOW_BOOKS_TAG } from '../../lib/cache-tags';
 
 // list -ийг 60 секунд тутамд ISR -р шинэчлэх
-export const revalidate = 60;
+// export const revalidate = 60;
+
+// Dynamic SSR so we don't bake an empty list during image build when the API isn't reachable.
+export const dynamic = 'force-dynamic';
+const revalidateSeconds = 60; // cache at runtime for 60s
 
 const fallbackPhoto = 'https://placehold.co/96x96?text=No+Photo';
 
@@ -27,7 +31,8 @@ export default function YellowBooksPage() {
 
 async function YellowBookList() {
   try {
-    const list = await fetchYellowBooks({ revalidate, tags: [YELLOW_BOOKS_TAG] });
+    // const list = await fetchYellowBooks({ revalidate, tags: [YELLOW_BOOKS_TAG] });
+    const list = await fetchYellowBooks({ revalidate: revalidateSeconds, tags: [YELLOW_BOOKS_TAG] });
 
     return (
       <ul className="space-y-4" aria-label="Business list">

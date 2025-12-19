@@ -15,12 +15,15 @@ spec:
     spec:
       containers:
         - name: web
-          image: 336098584974.dkr.ecr.ap-southeast-1.amazonaws.com/yellowbooks/web:b03d6d4
+          image: 336098584974.dkr.ecr.ap-southeast-1.amazonaws.com/yellowbooks/web:866cbe7
           ports:
             - containerPort: 3000
           env:
             - name: PORT
               value: '3000'
+            # Server-side fetches should hit the API service directly to avoid loopback/404s.
+            - name: API_BASE
+              value: http://api.yellowbooks.svc.cluster.local
             - name: NEXT_PUBLIC_API
               valueFrom:
                 configMapKeyRef:
