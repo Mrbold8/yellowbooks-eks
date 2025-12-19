@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: 336098584974.dkr.ecr.ap-southeast-1.amazonaws.com/yellowbooks/api:b03d6d4
+          image: 336098584974.dkr.ecr.ap-southeast-1.amazonaws.com/yellowbooks/api:4523fe1
           ports:
             - containerPort: 3000
           env:
