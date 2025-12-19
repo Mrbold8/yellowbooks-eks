@@ -49,6 +49,9 @@ kind: Service
 metadata:
   name: web
   namespace: yellowbooks
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/success-codes: "200-399"
 spec:
   selector:
     app: web

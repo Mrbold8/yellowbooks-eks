@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: 336098584974.dkr.ecr.ap-southeast-1.amazonaws.com/yellowbooks/api:main
+          image: 336098584974.dkr.ecr.ap-southeast-1.amazonaws.com/yellowbooks/api:7b55c81
           ports:
             - containerPort: 3000
           env:
@@ -48,6 +48,9 @@ kind: Service
 metadata:
   name: api
   namespace: yellowbooks
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /health
+    alb.ingress.kubernetes.io/success-codes: "200-399"
 spec:
   selector:
     app: api
