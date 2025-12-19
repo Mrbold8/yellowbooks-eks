@@ -17,8 +17,12 @@ type NextAwareRequestInit = RequestInit & {
   };
 };
 
+// Allow both server-only and public envs; k8s config currently provides NEXT_PUBLIC_API (e.g. "/api").
 const API_BASE =
-  process.env.API_BASE ?? process.env.NEXT_PUBLIC_API_BASE ?? 'http://localhost:3000';
+  process.env.API_BASE ??
+  process.env.NEXT_PUBLIC_API_BASE ??
+  process.env.NEXT_PUBLIC_API ??
+  'http://localhost:3000';
 
 // buildRequestInit нь өгөгдсөн сонголтоор fetch -ийн init бэлдэж, Next тохиргоог тохируулна.
 function buildRequestInit(options?: FetchConfig): NextAwareRequestInit {
